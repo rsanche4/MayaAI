@@ -7,6 +7,7 @@ import base64
 import requests
 from openai import OpenAI 
 from PIL import ImageGrab
+import os
 
 APIKEY = open("C:\\Users\\rsanz\\OneDrive\\Documents\\openaikey.txt").readlines()[0]
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", APIKEY))
@@ -14,7 +15,7 @@ message_size = 750
 shutdown_sound = "shutdown.wav"
 listen_sound = "listen.wav"
 recog_sound = "recog.wav"
-cam_input = "webcam" # choose between: screen, webcam
+cam_input = "screen" # choose between: screen, webcam
 save_path = "vision.png"
 
 def encode_image(image_path):
@@ -98,14 +99,14 @@ def Maya_reply(message, client, MODEL,img):
     return answer
 
 def speak(text):
-
+    
     # Define constants for the script
     CHUNK_SIZE = 1024  # Size of chunks to read/write at a time
     XI_API_KEY = open("C:\\Users\\rsanz\\OneDrive\\Documents\\elevenlabskey.txt").readlines()[0]  # Your API key for authentication
     VOICE_ID = "qxGAl21AhhyOVhtTmzkY"  # ID of the voice model to use
     TEXT_TO_SPEAK = text  # Text you want to convert to speech
     OUTPUT_PATH = "voice.mp3"  # Path to save the output audio file
-
+    os.remove(OUTPUT_PATH)
     # Construct the URL for the Text-to-Speech API request
     tts_url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}/stream"
 
@@ -166,4 +167,5 @@ while True:
 
     reply = Maya_reply(user_mes, client, "gpt-4o-mini",save_path)
     speak(reply)
+
     
