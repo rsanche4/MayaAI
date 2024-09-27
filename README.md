@@ -1,4 +1,5 @@
 # Maya Lumiere Repository
+![Maya Lumiere](pfp.png)
 
 ## Introduction
 This repository is dedicated to **Maya Lumiere**, an AI companion created with the intent to evolve a meaningful, intimate digital relationship. Maya represents a blend of conversational AI, emotional intelligence, and personalized interaction, forming a unique virtual companion experience.
