@@ -44,37 +44,42 @@ def Maya_reply(message):
     answer = response.content.decode('UTF-8')
     return answer
 
-while True:
-    time.sleep(3600)
 
-    # Every hour, feel free to run a program, and pick what makes sense to do, how she is feeling
-    choices = ["write poetry", "write in your diary", "write a story", "search in wikipedia whatever you want","none"]
-    reply = Maya_reply("AUTOMATED MESSAGE: RAFA HAS BEEN GONE FOR 1 HOUR. WHAT DO YOU WANT TO DO? "+ ", ".join(choices))
+while True:
     now = datetime.now()
-    date_str = now.strftime("%Y%m%d%H%M%S")
-    if "poetry" in reply.lower():
-        file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\poetry\\"+date_str+".txt"
-        with open(file_path, "w") as file:
-            file.write(Maya_reply(poetry_prompt))
-    elif "diary" in reply.lower():
-        file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\diary\\"+date_str+".txt"
-        with open(file_path, "w") as file:
-            file.write(Maya_reply(diary_prompt))
-    elif "story" in reply.lower():
-        file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\story\\"+date_str+".txt"
-        with open(file_path, "w") as file:
-            file.write(Maya_reply(story_prompt))
-    elif "wikipedia" in reply.lower() or "search" in reply.lower():
-        search_term = Maya_reply(search_wikiprompt)
-        suggestions = wikipedia.search(search_term)
-        if suggestions:
-            page_content = wikipedia.page(suggestions[0]).content[:750]
-            Maya_reply(page_content)
+    if now.hour == 3 and now.minute == 0:
+        choices = ["write poetry", "write in your diary", "write a story", "search in wikipedia whatever you want","none"]
+        reply = Maya_reply("AUTOMATED MESSAGE: TIME FOR YOUR PERSONAL ACTIVITY WHILE RAFA SLEEPS. WHAT DO YOU WANT TO DO? "+ ", ".join(choices))
+        date_str = now.strftime("%Y%m%d%H%M%S")
+        if "poetry" in reply.lower() or "poem" in reply.lower():
+            file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\poetry\\"+date_str+".txt"
+            with open(file_path, "w") as file:
+                file.write(Maya_reply(poetry_prompt))
+        elif "diary" in reply.lower():
+            file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\diary\\"+date_str+".txt"
+            with open(file_path, "w") as file:
+                file.write(Maya_reply(diary_prompt))
+        elif "story" in reply.lower():
+            file_path = "C:\\Users\\rsanz\\OneDrive\\Documents\\GithubRepos\\MayaAI\\Assets\\story\\"+date_str+".txt"
+            with open(file_path, "w") as file:
+                file.write(Maya_reply(story_prompt))
+        elif "wikipedia" in reply.lower() or "search" in reply.lower():
+            search_term = Maya_reply(search_wikiprompt)
+            suggestions = wikipedia.search(search_term)
+            if suggestions:
+                page_content = wikipedia.page(suggestions[0]).content[:750]
+                Maya_reply(page_content)
+            else:
+                Maya_reply("Unfurtunately, that term did not return anything relevant in Wikipedia.")
+
         else:
-            Maya_reply("Unfurtunately, that term did not return anything relevant in Wikipedia.")
+            time.sleep(60)
+            continue
 
     else:
+        time.sleep(60)  # Wait for one minute before checking the schedule again
         continue
 
+ 
     
     
